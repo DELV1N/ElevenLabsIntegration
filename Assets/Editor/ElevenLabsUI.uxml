@@ -2,7 +2,7 @@
     <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1">
         <ui:Label tabindex="-1" text="ElevenLabs Dashboard" parse-escape-sequences="true" display-tooltip-when-elided="false" enable-rich-text="false" focusable="false" style="flex-direction: column; align-self: center; justify-content: flex-start; align-items: center; position: relative; left: auto; -unity-text-align: middle-center; font-size: 18px; -unity-font-style: normal; margin-top: 8px; margin-bottom: initial; margin-right: initial; margin-left: initial; padding-top: initial; padding-right: initial; padding-bottom: initial; padding-left: initial; -unity-font: initial; text-overflow: clip;" />
         <uie:Toolbar usage-hints="None" focusable="false" tabindex="0" style="align-self: auto; justify-content: center; align-items: center; -unity-background-image-tint-color: rgba(255, 255, 255, 0);">
-            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" style="align-self: auto; align-items: stretch; justify-content: flex-start; left: auto;" />
+            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="button1" style="align-self: auto; align-items: stretch; justify-content: flex-start; left: auto;" />
             <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" />
             <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" />
         </uie:Toolbar>

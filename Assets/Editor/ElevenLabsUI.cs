@@ -22,5 +22,17 @@ public class ElevenLabsUI : EditorWindow
         // Instantiate UXML
         VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
         root.Add(labelFromUXML);
+        SetupButtonHandler();
+    }
+
+    private void SetupButtonHandler()
+    {
+        VisualElement root = rootVisualElement;
+
+        root.Q<Button>("button1").clicked += async () =>
+        {
+            var text = new ElevenLabsGetRequest("9e24ab5f805316136620a22c04078ca9", "https://api.elevenlabs.io/v1/");
+            Debug.Log(await text.GetUserInfo());
+        };
     }
 }
