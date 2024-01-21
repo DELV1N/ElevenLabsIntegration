@@ -1,0 +1,14 @@
+фыв {
+}
+
+asd {
+}
+
+Button {
+}
+
+Button.yellow {
+}
+
+Button.yellow:hover Label#foo {
+}
