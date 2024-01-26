@@ -1,3 +1,4 @@
+using Codice.CM.Common;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -11,7 +12,15 @@ public class ElevenLabsUI : EditorWindow
 	[SerializeField]
 	private VisualTreeAsset m_SpeechSynthesisAsset = default;
 
-	[MenuItem("Window/UI Toolkit/ElevenLabs")]
+    private readonly IUserService _userService;
+    private readonly IHistoryService _historyService;
+    public ElevenLabsUI()
+    {
+        _userService = new UserService();
+        _historyService = new HistoryService(_userService);
+    }
+
+    [MenuItem("Window/UI Toolkit/ElevenLabs")]
     public static void ShowExample()
     {
         ElevenLabsUI wnd = GetWindow<ElevenLabsUI>();
@@ -36,9 +45,8 @@ public class ElevenLabsUI : EditorWindow
         VisualElement root = rootVisualElement;
 
         root.Q<ToolbarButton>("Synthesis").clicked += async () =>
-        {
-            var text = new ElevenLabsGetRequest("9e24ab5f805316136620a22c04078ca9", "https://api.elevenlabs.io/v1/");
-            Debug.Log(await text.GetUserInfo());
+        {            
+            Debug.Log(await _userService.GetUserInfo());
         };
     }
 }
