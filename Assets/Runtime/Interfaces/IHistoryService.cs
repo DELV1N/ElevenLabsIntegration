@@ -6,5 +6,5 @@ public interface IHistoryService
     Task<string> GetHistoryItemById();
     Task<string> DeleteHistoryItem(string id);
     Task<string> GetAudioFromHistoryItem(string id);
-    Task<string> DownloadHistoryItems(string[] ids);
+    Task<string[]> DownloadHistoryItems(string[] ids);
 }

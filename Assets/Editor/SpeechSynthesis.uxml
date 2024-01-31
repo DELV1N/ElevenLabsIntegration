@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" style="width: 100%; height: 100%;">
-        <ui:EnumField label="Voice" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" include-obsolete-values="false" name="Voices" style="padding-left: 10px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-right: 10px; flex-direction: row; -unity-text-align: middle-left;" />
+        <ui:DropdownField label="Voices" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="Voices" />
     </ui:ScrollView>
 </ui:UXML>
