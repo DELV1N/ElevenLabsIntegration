@@ -10,4 +10,12 @@ public class VoicesItem
 { 
 	[JsonProperty("voice_id")]
 	public string VoiceId { get; set; }
+
+	[JsonProperty("name")]
+	public string Name { get; set; }
+
+	public string GetId()
+	{ 
+		return VoiceId;
+	}
 }

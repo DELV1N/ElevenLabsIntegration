@@ -8,17 +8,25 @@ public class VoiceService : IVoiceService
 {
 	public async Task<VoicesInfo> GetVoices()
 	{
-		var uri = $"{ElevenLabsConst.BaseUrl}voices";
-		var requset = new HttpRequestMessage(HttpMethod.Get, uri);
-		requset.Headers.Add("xi-api-key", ElevenLabsConst.ApiKey);
+		var uri = $"{ElevenLabsConst.baseUrl}voices";
+		var request = new HttpRequestMessage(HttpMethod.Get, uri);
+		request.Headers.Add("xi-api-key", ElevenLabsConst.apiKey);
+
 		using (var httpClient = new HttpClient())
 		{
-			var response = await httpClient.SendAsync(requset);
-			var json = await response.Content.ReadAsStringAsync();
-			var text = JsonConvert.DeserializeObject<VoicesInfo>(json);
-			if (response.IsSuccessStatusCode)
-				return text;
-			throw new Exception(response.StatusCode.ToString());
+			try
+			{
+				var response = await httpClient.SendAsync(request);
+				var json = await response.Content.ReadAsStringAsync();
+				var text = JsonConvert.DeserializeObject<VoicesInfo>(json);
+				if (response.IsSuccessStatusCode)
+					return text;
+				throw new Exception(response.StatusCode.ToString());
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.ToString());
+			}
 		}
 	}
 }

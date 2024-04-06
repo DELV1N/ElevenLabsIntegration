@@ -1,5 +1,16 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" style="width: 100%; height: 100%;">
-        <ui:DropdownField label="Voices" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="Voices" />
+    <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ScrollView" touch-scroll-type="Clamped" style="width: 100%; height: 100%; flex-direction: row;">
+        <ui:DropdownField label="Voices" index="-1" name="Voices" style="padding-bottom: 15px; margin-right: 15px; margin-left: 15px; min-height: 24px;" />
+        <ui:Slider picking-mode="Ignore" label="Stability" value="0.5" high-value="1" name="Stability" page-size="0" show-input-field="true" style="margin-right: 15px; margin-left: 15px; padding-bottom: 15px; flex-direction: row; flex-wrap: nowrap;" />
+        <ui:Slider picking-mode="Ignore" label="Clarity + Similarity" value="0.75" high-value="1" name="Similarity" show-input-field="true" style="padding-bottom: 15px; margin-right: 15px; margin-left: 15px;" />
+        <ui:Slider picking-mode="Ignore" label="Style Exaggeration" value="0" high-value="1" name="Exaggeration" show-input-field="true" style="padding-bottom: 15px; margin-right: 15px; margin-left: 15px;" />
+        <ui:Toggle label="Speaker Boost" value="true" focusable="true" name="SpeakerBoost" tooltip="Boost the similarity of the synthesized speech and the voice at the cost of some generation speed" style="padding-bottom: 15px; margin-right: 15px; margin-left: 15px; min-height: 24px;" />
+        <ui:DropdownField label="Models" index="-1" name="Models" style="padding-bottom: 15px; margin-right: 15px; margin-left: 15px; flex-wrap: nowrap; min-height: 24px;" />
+        <uie:Toolbar usage-hints="None" focusable="false" tabindex="0" name="Toolbar" style="align-self: auto; justify-content: space-between; align-items: center; -unity-background-image-tint-color: rgba(255, 255, 255, 0); background-color: rgba(60, 60, 60, 0); border-bottom-width: 0; flex-basis: auto; flex-shrink: 0; flex-direction: row; flex-wrap: nowrap; height: auto; padding-right: 0; padding-left: 0; min-height: 24px; margin-top: 2px; margin-right: 12px; margin-bottom: 2px; margin-left: 12px; padding-bottom: 15px;">
+            <ui:Button text="Refresh" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Refresh" />
+            <ui:Button text="To Default" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="Reset" />
+        </uie:Toolbar>
+        <ui:TextField picking-mode="Ignore" label="Text" name="Text" multiline="true" style="margin-right: 15px; margin-left: 15px; padding-bottom: 15px; white-space: normal; height: auto; flex-direction: row; -unity-text-align: upper-left; text-overflow: clip; align-items: stretch; align-self: auto; width: auto; flex-wrap: nowrap; flex-basis: auto; min-height: 24px;" />
+        <ui:Button text="Generate" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Generate" style="margin-right: 15px; margin-left: 15px; padding-bottom: 5px; padding-top: 5px; padding-right: 0; padding-left: 0; justify-content: flex-start; align-self: auto; align-items: stretch; flex-wrap: nowrap; flex-direction: row; text-overflow: clip; white-space: nowrap; -unity-text-align: middle-center;" />
     </ui:ScrollView>
 </ui:UXML>
