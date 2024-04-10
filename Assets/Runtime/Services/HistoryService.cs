@@ -4,11 +4,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 [Serializable]
-public class UserService : IUserService
+public class HistoryService : IHistoryService
 {
-    public async Task<UserInfo> GetUserInfo()
+    public async Task<History> GetGeneratedItems()
     {
-        var uri = $"{ElevenLabsConst.baseUrl}user";
+        var uri = $"{ElevenLabsConst.baseUrl}history";
         var request = new HttpRequestMessage(HttpMethod.Get, uri);
         request.Headers.Add("xi-api-key", ElevenLabsConst.apiKey);
 
@@ -18,39 +18,39 @@ public class UserService : IUserService
             {
                 var response = await httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                var text = JsonConvert.DeserializeObject<UserInfo>(json);
+                var text = JsonConvert.DeserializeObject<History>(json);
                 if (response.IsSuccessStatusCode)
                     return text;
                 throw new Exception(response.StatusCode.ToString());
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception(ex.ToString());
             }
         }
     }
 
-    public async Task<UserSubscriptionInfo> GetUserSubscriptionInfo()
+    public async Task<History> GetGeneratedItems(int pageSize)
     {
-		var uri = $"{ElevenLabsConst.baseUrl}user/subscription";
-		var requset = new HttpRequestMessage(HttpMethod.Get, uri);
-		requset.Headers.Add("xi-api-key", ElevenLabsConst.apiKey);
+        var uri = $"{ElevenLabsConst.baseUrl}history?page_size={pageSize}";
+        var request = new HttpRequestMessage(HttpMethod.Get, uri);
+        request.Headers.Add("xi-api-key", ElevenLabsConst.apiKey);
 
-		using (var httpClient = new HttpClient())
-		{
+        using (var httpClient = new HttpClient())
+        {
             try
             {
-                var response = await httpClient.SendAsync(requset);
+                var response = await httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                var text = JsonConvert.DeserializeObject<UserSubscriptionInfo>(json);
+                var text = JsonConvert.DeserializeObject<History>(json);
                 if (response.IsSuccessStatusCode)
                     return text;
                 throw new Exception(response.StatusCode.ToString());
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception(ex.ToString());
             }
-		}
-	}
+        }
+    }
 }

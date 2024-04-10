@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-public interface ITextToSpeech
+public interface ITextToSpeechService
 {
     Task<byte[]> GenerateFile(string voiceId, string output_format, TextToSpeech data);
 }

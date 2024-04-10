@@ -9,7 +9,7 @@ MonoImporter:
   - m_SpeechSynthesisAsset: {fileID: 9197481963319205126, guid: fb35f7a1f7b3f9840be755478a5714e6, type: 3}
   - m_VoiceLabAsset: {fileID: 9197481963319205126, guid: 3de4c71b900930247adf4d423d716392, type: 3}
   - m_HistoryAsset: {fileID: 9197481963319205126, guid: 5f58fde456bb36942bba0b1140343fed, type: 3}
-  - m_DirectoryAsset: {fileID: 9197481963319205126, guid: b019c3a200410a742b27858a7604aff4, type: 3}
+  - m_SaveFolderAsset: {fileID: 9197481963319205126, guid: b019c3a200410a742b27858a7604aff4, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
