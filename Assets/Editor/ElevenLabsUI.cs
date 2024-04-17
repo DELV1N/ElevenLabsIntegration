@@ -5,9 +5,14 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
+using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class ElevenLabsUI : EditorWindow
 {
+    #region Assets
+
     [SerializeField]
     private VisualTreeAsset m_HeaderAsset = default;
 
@@ -21,12 +26,20 @@ public class ElevenLabsUI : EditorWindow
     private VisualTreeAsset m_HistoryAsset = default;
 
     [SerializeField]
+    private VisualTreeAsset m_HistoryItemAsset = default;
+
+    [SerializeField]
     private VisualTreeAsset m_SaveFolderAsset = default;
+
+    #endregion
+
+    #region UX Content
 
     private readonly float defStability = 0.5f;
     private readonly float defSimilarity = 0.75f;
     private readonly float defExaggeration = 0.0f;
     private readonly bool defSpeakerBoost = true;
+    private readonly int defaultPageSize = 12;
 
     private DropdownField voices = null;
     private DropdownField models = null;
@@ -35,14 +48,34 @@ public class ElevenLabsUI : EditorWindow
     private Button reset = null;
     private Button generate = null;
     private Button change = null;
+    private Button prevPage = null;
+    private Button nextPage = null;
+    private Button selectAll = null;
+    private Button deselectAll = null;
+    private Button downloadItems = null;
+    private Button download = null;
+    private Button delete = null;
     private TextField text = null;
+    private TextField soundText = null;
+    private IntegerField pageSize = null;
+    private ObjectField soundObject = null;
     private Slider stability = null;
     private Slider similarity = null;
     private Slider exaggeration = null;
     private Toggle speakerBoost = null;
+    private Toggle soundData = null;
+    private Stack<string> prevPageIds = new();
+
+    private ScrollView scrollView = null;
 
     private VoicesItem[] voiceItems = null;
     private Model[] modelItems = null;
+    private History historyItems = null;
+    private List<HistoryItem[]> historyItemsPages = null;
+
+    private static Vector2 windowMinSize = new(700, 550);
+
+    #endregion
 
     private readonly IVoiceService _voiceService;
     private readonly IModelService _modelService;
@@ -55,8 +88,6 @@ public class ElevenLabsUI : EditorWindow
         _textToSpeechService = new TextToSpeechService();
         _historyService = new HistoryService();
     }
-
-    private static Vector2 windowMinSize = new(700, 550);
 
     [MenuItem("Window/Dashboard/ElevenLabs")]
     public static void RenderMainWindow()
@@ -74,10 +105,12 @@ public class ElevenLabsUI : EditorWindow
         VisualElement Header = m_HeaderAsset.Instantiate();
         VisualElement SpeechSynthesis = m_SpeechSynthesisAsset.Instantiate();
         VisualElement SaveFolder = m_SaveFolderAsset.Instantiate();
+        scrollView = new();
 
-        rootVisualElement.Add(Header);
-        rootVisualElement.Add(SaveFolder);
-        rootVisualElement.Add(SpeechSynthesis);
+        scrollView.Add(Header);
+        scrollView.Add(SaveFolder);
+        scrollView.Add(SpeechSynthesis);
+        rootVisualElement.Add(scrollView);
 
         RenderSpeechSynthesis();
 
@@ -107,17 +140,14 @@ public class ElevenLabsUI : EditorWindow
             generate.SetEnabled(true);
 
         rootVisualElement.Q<Label>("MaxSymb").text = text.value.Length.ToString();
-
-        if (text.value.Length > 2500)
-            text.value = text.value.Substring(0, 2500);
     }
 
     private async void RenderSpeechSynthesis()
     {
 		var SpeechSynthesis = m_SpeechSynthesisAsset.Instantiate();
 
-        rootVisualElement.RemoveAt(2);
-        rootVisualElement.Add(SpeechSynthesis);
+        scrollView.RemoveAt(2);
+        scrollView.Add(SpeechSynthesis);
 
 		voices = SpeechSynthesis.Q<DropdownField>("Voices");
         models = SpeechSynthesis.Q<DropdownField>("Models");
@@ -146,7 +176,7 @@ public class ElevenLabsUI : EditorWindow
 
         if (voiceItems == null || modelItems == null)
         {
-            await GetData();
+            await GetVoicesModels();
         }
 
         voices.choices = voiceItems.Select(x => x.Name).ToList();
@@ -157,16 +187,93 @@ public class ElevenLabsUI : EditorWindow
 
     private void RenderVoiceLab()
     {
-		rootVisualElement.RemoveAt(2);
-		rootVisualElement.Add(m_VoiceLabAsset.Instantiate());
+        scrollView.RemoveAt(2);
+        scrollView.Add(m_VoiceLabAsset.Instantiate());
 	}
 
     private void RenderHistory()
     {
-		rootVisualElement.RemoveAt(2);
-		rootVisualElement.Add(m_HistoryAsset.Instantiate());
+        var History = m_HistoryAsset.Instantiate();
+
+        scrollView.RemoveAt(2);
+        scrollView.Add(History);
+
+        prevPage = History.Q<Button>("PrevPage");
+        nextPage = History.Q<Button>("NextPage");
+        refresh = History.Q<Button>("Refresh");
+        selectAll = History.Q<Button>("SelectAll");
+        deselectAll = History.Q<Button>("DeselectAll");
+        downloadItems = History.Q<Button>("DownloadItems");
+        pageSize = History.Q<IntegerField>("PageSize");
+
+        pageSize.value = defaultPageSize;
+
+        GetHistoryItems();
+
+        refresh.clicked += () => GetHistoryItems();
+        nextPage.clicked += () => GetHistoryItems(historyItems.LastHistoryItemId);
+        prevPage.clicked += () =>
+        {
+            if (prevPageIds.TryPeek(out var prevPageId))
+                GetHistoryItems(prevPageId);
+        };
 	}
 
+    private async void GetHistoryItems(string historyId = null)
+    {
+        var scrlView = scrollView.Q<ScrollView>("ScrollView");
+
+        if (scrlView.childCount != 0)
+        {
+            scrlView.Clear();
+        }
+        prevPage.visible = false;
+        nextPage.visible = false;
+        deselectAll.visible = false;
+        refresh.SetEnabled(false);
+        selectAll.SetEnabled(false);
+        downloadItems.SetEnabled(false);
+
+        if (string.IsNullOrWhiteSpace(historyId) && prevPageIds.Count > 0 && prevPageIds.TryPeek(out var prevPageId))
+        {
+            historyId = prevPageId;
+        }
+        else
+        {
+            if (prevPageIds.TryPeek(out prevPageId) && prevPageId == historyId)
+            {
+                prevPageIds.Pop();
+                historyId = prevPageIds.Count > 0 && prevPageIds.TryPeek(out prevPageId) ? prevPageId : null;
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(historyId))
+                {
+                    prevPageIds.Push(historyId);
+                }
+            }
+        }
+
+        historyItems = null;
+        var list = await _historyService.GetGeneratedItems(pageSize.value, historyId);
+        historyItems = list;
+
+        var historyItemsCount = historyItems.HistoryItems.Count();
+
+        for (var i = 0; i < historyItemsCount; i++)
+        {
+            scrlView.Add(m_HistoryItemAsset.Instantiate());
+        }
+
+        prevPage.visible = true;
+        nextPage.visible = true;
+        deselectAll.visible = true;
+        refresh.SetEnabled(true);
+        selectAll.SetEnabled(true);
+        downloadItems.SetEnabled(true);
+    }
+
+    #region SpeechSynthesis methods
     private void ChangeButton_clicked()
     {
         ElevenLabsConst.savePath = EditorUtility.SaveFolderPanel("Select save folder path", "", "");
@@ -189,7 +296,7 @@ public class ElevenLabsUI : EditorWindow
 
     private async void RefreshButton_clicked()
     {
-        await GetData();
+        await GetVoicesModels();
     }
 
     private async void GenerateButton_clicked()
@@ -198,7 +305,7 @@ public class ElevenLabsUI : EditorWindow
         generate.SetEnabled(false);
 
         var byteArr = await Generate();
-        var historyItem = (await _historyService.GetGeneratedItems(1)).HistoryItems.ToList().FirstOrDefault();
+        var historyItem = (await _historyService.GetGeneratedItems(1, null)).HistoryItems.ToList().FirstOrDefault();
         var filePath = ElevenLabsConst.savePath + "/" + historyItem.VoiceName + "/";
 
         if (!Directory.Exists(filePath))
@@ -227,7 +334,7 @@ public class ElevenLabsUI : EditorWindow
         return (await _textToSpeechService.GenerateFile(voiceItems.Where(x => x.Name == voices.value).FirstOrDefault().VoiceId, formats.value, Data));
     }
 
-    private async Task GetData()
+    private async Task GetVoicesModels()
     {
         voices.SetEnabled(false);
         models.SetEnabled(false);
@@ -249,4 +356,5 @@ public class ElevenLabsUI : EditorWindow
         text.SetEnabled(true);
         generate.SetEnabled(true);
     }
+    #endregion
 }

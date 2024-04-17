@@ -85,7 +85,7 @@ public class History
     public bool HasMore { get; set; }
 
     [JsonProperty("history")]
-    public List<HistoryItem> HistoryItems { get; set; }
+    public HistoryItem[] HistoryItems { get; set; }
 
     [JsonProperty("last_history_item_id")]
     public string LastHistoryItemId { get; set; }

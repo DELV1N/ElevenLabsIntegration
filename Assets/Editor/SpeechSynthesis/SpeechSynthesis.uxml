@@ -11,8 +11,8 @@
             <ui:Button text="Refresh" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Refresh" />
             <ui:Button text="To Default" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="Reset" />
         </uie:Toolbar>
-        <ui:TextField picking-mode="Ignore" label="Text" name="Text" multiline="true" style="margin-right: 15px; margin-left: 15px; padding-bottom: 5px; white-space: normal; height: auto; flex-direction: row; -unity-text-align: upper-left; text-overflow: clip; align-items: stretch; align-self: auto; width: auto; flex-wrap: nowrap; flex-basis: auto; min-height: 24px;" />
-        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; justify-content: flex-end; margin-right: 15px; margin-bottom: 15px;">
+        <ui:TextField picking-mode="Ignore" label="Text" name="Text" multiline="true" max-length="2500" style="margin-right: 15px; margin-left: 15px; padding-bottom: 5px; white-space: normal; height: auto; flex-direction: row; -unity-text-align: upper-left; text-overflow: clip; align-items: stretch; align-self: auto; width: auto; flex-wrap: nowrap; flex-basis: auto; min-height: 24px;" />
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; justify-content: flex-end; margin-right: 15px; margin-bottom: 5px;">
             <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MaxSymb" enable-rich-text="true" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             <ui:Label tabindex="-1" text="/2500" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
         </ui:VisualElement>

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class ElevenLabsConst
 {
-    public static string apiKey = "9e24ab5f805316136620a22c04078ca9";
+    public static string apiKey = "3f948ac75cca970afb5f37e25a320128";
     public static string baseUrl = "https://api.elevenlabs.io/v1/";
     public static string savePath = Application.dataPath + "/ElevenLabs";
     public static List<string> outputFormats = new()
