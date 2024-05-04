@@ -59,4 +59,48 @@ public class HistoryService : IHistoryService
             }
         }
     }
+    public async Task<byte[]> GetAudioFromHistoryItem(string historyItemId)
+    {
+        var uri = $"{ElevenLabsConst.baseUrl}history/{historyItemId}/audio";
+        var request = new HttpRequestMessage(HttpMethod.Get, uri);
+        request.Headers.Add("xi-api-key", ElevenLabsConst.apiKey);
+
+        using (var httpClient = new HttpClient())
+        {
+            try
+            {
+                var response = await httpClient.SendAsync(request);
+                var file = await response.Content.ReadAsByteArrayAsync();
+                if (response.IsSuccessStatusCode)
+                    return file;
+                throw new Exception(response.StatusCode.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+    }
+
+    public async Task<object> DeleteHistoryItem(string historyItemId)
+    {
+        var uri = $"{ElevenLabsConst.baseUrl}history/{historyItemId}";
+        var request = new HttpRequestMessage(HttpMethod.Delete, uri);
+        request.Headers.Add("xi-api-key", ElevenLabsConst.apiKey);
+
+        using (var httpClient = new HttpClient())
+        {
+            try
+            {
+                var response = await httpClient.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                    return response;
+                throw new Exception(response.StatusCode.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+    }
 }

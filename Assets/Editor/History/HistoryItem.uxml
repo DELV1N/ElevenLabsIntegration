@@ -1,11 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-between; align-items: center; margin-right: 15px; margin-left: 15px;">
-        <ui:Toggle text=" test | 01.01.0001 | Rachel" value="false" name="SoundData" style="align-items: center; height: 38px; align-self: center;" />
-        <uie:Toolbar style="border-left-color: rgba(35, 35, 35, 0); border-right-color: rgba(35, 35, 35, 0); border-top-color: rgba(35, 35, 35, 0); border-bottom-color: rgba(35, 35, 35, 0); background-color: rgba(60, 60, 60, 0); height: auto; justify-content: flex-end; align-self: auto; flex-grow: 1; flex-shrink: 1;">
+    <ui:VisualElement name="VE" style="flex-grow: 1; flex-direction: row; justify-content: space-between; align-items: center; margin-right: 15px; margin-left: 15px;">
+        <ui:Toggle value="false" name="Toggle" style="align-items: center; height: 38px; align-self: center;" />
+        <ui:Label tabindex="-1" text=" test | 01.01.0001 | Rachel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SoundData" />
+        <uie:Toolbar name="Buttons" style="border-left-color: rgba(35, 35, 35, 0); border-right-color: rgba(35, 35, 35, 0); border-top-color: rgba(35, 35, 35, 0); border-bottom-color: rgba(35, 35, 35, 0); background-color: rgba(60, 60, 60, 0); height: auto; justify-content: flex-end; align-self: auto; flex-grow: 1; flex-shrink: 1;">
             <ui:Button text="Download" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Download" style="flex-shrink: 0; flex-grow: 0; justify-content: center; flex-wrap: nowrap; flex-basis: auto; flex-direction: column; align-self: center;" />
             <ui:Button text="Delete" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Delete" style="align-self: center; flex-grow: 0;" />
         </uie:Toolbar>
     </ui:VisualElement>
-    <uie:ObjectField type="UnityEngine.Object, UnityEngine.CoreModule" name="SoundObject" style="flex-wrap: nowrap; align-self: center; align-items: center; margin-right: 25px; margin-left: 25px; margin-bottom: 15px;" />
+    <uie:ObjectField type="UnityEngine.AudioClip, UnityEngine.AudioModule" name="SoundObject" style="flex-wrap: nowrap; align-self: center; align-items: center; margin-right: 25px; margin-left: 25px; margin-bottom: 15px;" />
     <ui:TextField picking-mode="Ignore" readonly="true" hide-mobile-input="false" multiline="true" name="SoundText" style="margin-right: 15px; margin-left: 15px; margin-bottom: 15px;" />
 </ui:UXML>
