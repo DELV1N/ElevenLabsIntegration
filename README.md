@@ -28,6 +28,12 @@ This is a RESTful Client for Untiy Game Engine which integrates the ElevenLabs N
 ```
 
 ## Documentation
+### Content Table
+- [Authentication](#authentication)
+- [Editor Dashboard](#editor-dashboard)
+  - [SpeechSynthesis](#speech-synthesis)
+  - [History](#history)
+ 
 ### Authentication
 To connect your API key, you need to do the following steps
 1. In Unity Inspector window find package
@@ -46,12 +52,12 @@ Open dashboard by clicking on "Window" button and select **Window/Dashboard/Elev
 
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/ce792d9e-1cc1-4997-9774-ab3e43703b69)
 
-## SpeechSynthesis
+#### SpeechSynthesis
 On this page you can generate audio files like on ElevenLabs website. Default voices and settings are available to choose from. Generated files are automatically saved to the selected folder (separate folder is created for each voice)
 
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/6dce699d-f49a-4ed1-8d57-b8f89ff42276)
 
-## History
+#### History
 On this page you can download previously generated audio files
 
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/1d666c7c-2a9e-4b17-b105-a09384ed7523)
