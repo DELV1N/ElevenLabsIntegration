@@ -33,6 +33,7 @@ To connect your API key, you need to do the following steps
 1. In Unity Inspector window find package
 
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/44400b19-1e73-49b8-b090-ee09da7fd9eb)
+
 2. Open ElevenLabsConst file in Runtime folder
 3. Insert your API key in apiKey variable
 ```C#
@@ -42,12 +43,15 @@ public static string apiKey = "";
 ### Editor Dashboard
 Package allows you to generate audio files and download them later
 Open dashboard by clicking on "Window" button and select **Window/Dashboard/ElevenLabs**
+
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/ce792d9e-1cc1-4997-9774-ab3e43703b69)
 
 ## SpeechSynthesis
 On this page you can generate audio files like on ElevenLabs website. Default voices and settings are available to choose from. Generated files are automatically saved to the selected folder (separate folder is created for each voice)
+
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/6dce699d-f49a-4ed1-8d57-b8f89ff42276)
 
 ## History
 On this page you can download previously generated audio files
+
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/1d666c7c-2a9e-4b17-b105-a09384ed7523)
