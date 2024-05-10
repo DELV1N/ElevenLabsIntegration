@@ -1,17 +1,18 @@
-![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/d60925c5-fa00-44fb-a953-55226ecde1bd)# ElevenLabs Integration in Unity Game Engine
+# ElevenLabs Integration in Unity Game Engine
 
 This is a RESTful Client for Untiy Game Engine which integrates the ElevenLabs Neural Network model for generating dialoge audio files.
 
 ## Insalling instruction
-```
-____
-```
 ### Via Package Manager
 1. Open your Unity Package Manager in your project
 2. Click "+" button and select "Add package from git URL"
+
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/1f18ceb6-1f65-45c5-ac2b-a9fafb5a4ce4)
+
 3. Insert repository URL with attribute .git#main "https://github.com/DELV1N/ElevenLabsIntegration.git#main"
+
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/b8439ebb-9fd1-46d7-add2-86cd57ecd8c8)
+
 ### Via manifest file
 1. Open your Unity project folder in explorer
 2. Select /Packages folder and open manifest.json file
@@ -25,16 +26,12 @@ ____
   //
 }
 ```
-```
-____
-```
+
 ## Documentation
-```
-____
-```
 ### Authentication
 To connect your API key, you need to do the following steps
 1. In Unity Inspector window find package
+
 ![image](https://github.com/DELV1N/ElevenLabsIntegration/assets/71463243/44400b19-1e73-49b8-b090-ee09da7fd9eb)
 2. Open ElevenLabsConst file in Runtime folder
 3. Insert your API key in apiKey variable
