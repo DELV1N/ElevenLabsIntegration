@@ -415,13 +415,16 @@ public class ElevenLabsUI : EditorWindow
 
         foreach (var historyItem in scrlView.Children())
         {
-            if (historyItem.Q<Toggle>("Toggle").value == true || activeToggles == 0)
+	    if (historyItem.Q<Toggle>("Toggle") != null)
             {
-                var soundLabel = historyItem.Q<Label>("SoundData").text;
-                string id = soundLabel[..soundLabel.IndexOf(" ")];
-                string name = soundLabel[(soundLabel.LastIndexOf("|") + 2)..];
-                Items.Add(id, name);
-            }    
+                if (historyItem.Q<Toggle>("Toggle").value == true || activeToggles == 0)
+                {
+                    var soundLabel = historyItem.Q<Label>("SoundData").text;
+                    string id = soundLabel[..soundLabel.IndexOf(" ")];
+                    string name = soundLabel[(soundLabel.LastIndexOf("|") + 2)..];
+                    Items.Add(id, name);
+                }   
+	    }
         }
 
         foreach (var Item in Items)
